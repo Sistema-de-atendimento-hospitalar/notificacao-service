@@ -9,26 +9,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 @Entity
-@Table(name = "t_notificacao")
-public class Notificacao {
-	
+@Table(name = "t_token_autorization")
+public class TokenAutorization {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "notificacao_id")
+	@Column(name = "token_autorization_id")
 	private Long notificacaoId;
-	
-	@Column(name = "nome")
-	private String nome;
 
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	private String email;
-	
-	@Column(name = "token")
+
+	@Column(name = "cpf", length = 11, nullable = false)
+	private String cpf;
+
+	@Column(name = "token", nullable = false)
 	private String token;
-	
-	@Column(name = "data_hora_expiracao")
-	private LocalDateTime dataHoraExpiracao;
+
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@Column(name = "data_hora_expiracao", nullable = false)
+	private LocalDateTime dataHoraExpiracao = LocalDateTime.now();
 
 	public Long getNotificacaoId() {
 		return notificacaoId;
@@ -38,20 +45,20 @@ public class Notificacao {
 		this.notificacaoId = notificacaoId;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getToken() {
@@ -69,9 +76,5 @@ public class Notificacao {
 	public void setDataHoraExpiracao(LocalDateTime dataHoraExpiracao) {
 		this.dataHoraExpiracao = dataHoraExpiracao;
 	}
-	
-	
-	
-	
 
 }

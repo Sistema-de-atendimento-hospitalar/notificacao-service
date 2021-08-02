@@ -14,7 +14,7 @@ public enum ProblemType {
 
 	private String title;
 	private String uri;
-	private static final String HOST = "https://algafood.com.br%s";
+	private static final String HOST = "https://bublemedical.com.br%s";
 
 	ProblemType(String path, String title) {
 		this.uri = String.format(HOST, path);

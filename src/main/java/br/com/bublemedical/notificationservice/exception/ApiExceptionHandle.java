@@ -89,6 +89,13 @@ public class ApiExceptionHandle extends ResponseEntityExceptionHandler {
 		return this.handleExceptionInternal(ex, wrapper, new HttpHeaders(), status, request);
 	}
 	
+	@ExceptionHandler(InvalidTokenException.class)
+	public ResponseEntity<Object> handleInvalidTokenException(InvalidTokenException ex, WebRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		Wrapper wrapper = createWrapper(status, ProblemType.DADOS_INVALIDOS, ex.getMessage());
+		return this.handleExceptionInternal(ex, wrapper, new HttpHeaders(), status, request);
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleOtherException(Exception ex, WebRequest request) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
